@@ -61,7 +61,6 @@ implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage('getClient1')
   handleGetClient1(client: any) {
-    console.log('Received client1 data:', this.pongService.getClient1());
     const client1 = this.pongService.getClient1();
     client.emit('client1', client1);
   }
@@ -72,12 +71,10 @@ implements OnGatewayConnection, OnGatewayDisconnect {
     this.server.emit('client1Updated', newValue);
   }
 
-  @SubscribeMessage('racketMovement')
-  handleRacketMovement(@MessageBody() percent: number): void {
-    // Mettez à jour la position de la raquette du client
-    // Diffusez ces mises à jour aux autres joueurs
-    this.server.emit('racketMoved', percent);
-  }
+  // @SubscribeMessage('racketMovement')
+  // handleRacketMovement(@MessageBody() percent: number): void {
+  //   this.server.emit('racketMoved', percent);
+  // }
 
   // @SubscribeMessage('packet')
   // handlePacket(packet: any) {

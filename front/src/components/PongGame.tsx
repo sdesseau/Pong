@@ -5,11 +5,8 @@ import io from 'socket.io-client';
 
 const PongGame: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const ball = { x: 0, y: 0, radius: 10 }; // Coordonnées de la balle et son rayon
   var socket = io('http://localhost:8001');
   const [opponentRacketPosition, setOpponentRacketPosition] = useState<number | null>(null);
-  const [opponentId, setOpponentId] = useState(null);
-  const [playerId, setPlayerId] = useState(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -18,31 +15,7 @@ const PongGame: React.FC = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Établir une connexion WebSocket avec le serveur
-    // const newSocket = io('http://localhost:8001'); // Remplacez par l'URL du serveur WebSocket
-
-    // Gérer les messages reçus du serveur
-    socket.on('message', (data) => {
-      console.log(data);
-    });
-
-    socket.on('getClient1', (player_id) => {
-      setPlayerId(player_id);
-    });    
-    
-    socket.on('getClient1', (opponent_id ) => {
-      setOpponentId(opponent_id);
-    });
-
-
-    console.log('Player 1 ID:', playerId);
-    console.log('Player 2 ID:', opponentId);
-    
-
-    // setSocket(socket);
-
-
-    const area = new Area(canvas.width, canvas.height, playerId, opponentId);
+    const area = new Area(canvas.width, canvas.height, 1, 2);
 
     // Fonction de dessin
     const draw = () => {
@@ -105,16 +78,15 @@ const PongGame: React.FC = () => {
   }, [socket]);
 
   // Gérer les mouvements de la raquette du client
-  const handleRacketMovement = (percent: number) => {
-    if (socket) {
-      socket.emit('racketMovement', percent); // Envoyer le pourcentage au serveur
-    }
-  };
+  // const handleRacketMovement = (percent: number) => {
+  //   if (socket) {
+  //     socket.emit('racketMovement', percent); // Envoyer le pourcentage au serveur
+  //   }
+  // };
 
   if (socket) {
     // Écouter les mises à jour des raquettes des autres joueurs
     socket.on('racketMoved', (percent: number) => {
-      // Mettez à jour l'affichage avec la nouvelle position de la raquette de l'adversaire
     });
   }
   return (
