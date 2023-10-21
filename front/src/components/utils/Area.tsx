@@ -1,22 +1,8 @@
 import React, { useState } from 'react';
 import Racket from './Racket';
 import Entity from './Entity';
+import Size from './Size';
 
-
-// Classe Size
-class Size {
-  width: number;
-  height: number;
-
-  constructor(width: number = 0, height: number = 0) {
-    this.width = width;
-    this.height = height;
-  }
-
-  sizeFor(width: number, height: number) {
-    return new Size(width, height);
-  }
-}
 class Area {
     private size: Size;
     private opponent: Racket;

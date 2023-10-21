@@ -61,6 +61,7 @@ implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage('getClient1')
   handleGetClient1(client: any) {
+    console.log('Received client1 data:', this.pongService.getClient1());
     const client1 = this.pongService.getClient1();
     client.emit('client1', client1);
   }

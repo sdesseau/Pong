@@ -81,3 +81,5 @@ export class Location {
       return false;
     }
   }
+
+  export default Location;

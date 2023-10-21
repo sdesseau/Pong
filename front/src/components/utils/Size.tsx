@@ -33,3 +33,5 @@ export class Size {
       return this.scaled_height;
     }
   }
+
+  export default Size;
