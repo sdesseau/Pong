@@ -6,7 +6,6 @@ import io from 'socket.io-client';
 const PongGame: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   var socket = io('http://localhost:8001');
-  const [opponentRacketPosition, setOpponentRacketPosition] = useState<number | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -16,6 +15,8 @@ const PongGame: React.FC = () => {
     if (!ctx) return;
 
     const area = new Area(canvas.width, canvas.height, 1, 2);
+    console.log('Canvas Width:', canvas.width);
+    console.log('Canvas Height:', canvas.height);
 
     // Fonction de dessin
     const draw = () => {
@@ -43,27 +44,30 @@ const PongGame: React.FC = () => {
 
       // Log des valeurs de la raquette du joueur
       console.log('Player Y:', player.getLocation().getY());
-      console.log('Racket Width:', racketSize.getScaledWidth().getValue());
-      console.log('Racket Height:', racketSize.getScaledHeight().getValue());
+      console.log('Player X:', player.getLocation().getX());
+      console.log('Racket Width:', racketSize.getWidth());
+      console.log('Racket Height:', racketSize.getHeight());
       
       // Log des valeurs de la raquette de l'opposant
       console.log('Opponent Y:', opponent.getLocation().getY());
+      console.log('Opponent X:', opponent.getLocation().getX());
       
       // Log des valeurs de la balle
       console.log('Ball Y:', ballEntity.getLocation().getY());
-      console.log('Ball Width:', ballSize.getScaledWidth().getValue());
+      console.log('Ball X:', ballEntity.getLocation().getX());
+      console.log('Ball Width:', ballSize.getWidth());
 
       // Dessiner les raquettes et la balle en utilisant les données de Area
-      ctx.fillRect(player.getLocation().getX(), player.getLocation().getY(), racketSize.getScaledWidth().getValue(), racketSize.getScaledHeight().getValue());
+      ctx.fillRect(player.getLocation().getX(), player.getLocation().getY(), racketSize.getWidth(), racketSize.getHeight());
       
-      // ctx.fillRect(opponent.getLocation().getX(), opponent.getLocation().getY(), racketSize.width, racketSize.height);
-      if (opponentRacketPosition !== null) {
-        const opponentY = (canvas.height * opponentRacketPosition) / 100;
-        ctx.fillRect(canvas.width - racketSize.getScaledWidth().getValue(), opponentY, racketSize.getScaledWidth().getValue(), racketSize.getScaledHeight().getValue());
-      }
+      ctx.fillRect(opponent.getLocation().getX() - racketSize.getWidth(), opponent.getLocation().getY(), racketSize.getWidth(), racketSize.getHeight());
+      // if (opponentRacketPosition !== null) {
+      //   const opponentY = (canvas.height * opponentRacketPosition) / 100;
+      //   ctx.fillRect(canvas.width - racketSize.getWidth(), opponentY, racketSize.getWidth(), racketSize.getHeight());
+      // }
 
       ctx.beginPath();
-      ctx.arc(ballEntity.getLocation().getX(), ballEntity.getLocation().getY(), ballSize.getScaledWidth().getValue() / 2, 0, Math.PI * 2);
+      ctx.arc(ballEntity.getLocation().getX(), ballEntity.getLocation().getY(), ballSize.getWidth() / 2, 0, Math.PI * 2);
       ctx.fillStyle = 'black'; // Couleur de la balle
       ctx.fill();
     };
